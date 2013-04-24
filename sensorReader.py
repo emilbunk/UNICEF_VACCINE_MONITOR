@@ -61,12 +61,12 @@ def read_temp(sensorAddress):
 def updateLCD(values, devices):
 	if max(values) > 8:
 		temp = "ALARM %+2.2f\n" %(float(max(values)/100)
-		x = max(enumerate(values), key=operator.itemgetter(1))
-		mes = devices[x] + temp
+		index = max(enumerate(values), key=operator.itemgetter(1))
+		mes = devices[index] + temp
 	elif min(values) < 2:
 		temp = "ALARM %+2.2f\n" %(float(min(values)/100)
-		x = min(enumerate(values), key=operator.itemgetter(1))
-		mes = devices[x] + temp
+		index = min(enumerate(values), key=operator.itemgetter(1))
+		mes = devices[index] + temp
 	else:
 		mes = "Cur. max:%+2.2f\n" %(float(max(values))/100)
 		temp = "Cur. min:%+2.2f" %(float(min(values))/100)
