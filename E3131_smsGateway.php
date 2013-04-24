@@ -62,7 +62,7 @@
 		sendRequest($URL, $xml_data);
 	}
 	
-	function getStatus() {
+	function getStatus() {$URL = "http://192.168.1.1/api/monitoring/status";
 		$ch = curl_init($URL);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
