@@ -70,4 +70,5 @@
 		$Status = $xml -> response;
 
 		return $Status;
+	}
 ?>
