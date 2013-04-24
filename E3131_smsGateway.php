@@ -63,10 +63,17 @@
 	}
 	
 	function getStatus() {
-		$URL = "http://192.168.1.1/api/monitoring/status";
-		$xml_data = "";
-		
-		$xml = sendRequest($URL, $xml_data);
+		$ch = curl_init($URL);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HEADER, false);
+
+		$output = curl_exec($ch);
+		curl_close($ch);
+		$xml = simplexml_load_string($output);
 		$Status = $xml -> response;
 
 		return $Status;
