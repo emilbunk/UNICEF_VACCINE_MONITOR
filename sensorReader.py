@@ -1,4 +1,4 @@
-import os, time. urllib2, httplib, csv, sys
+import os, time, urllib2, httplib, csv, sys
 
 sys.path.append('/home/pi/UNICEF_VACCINE_MONITOR')
 from Adafruit_CharLCD import Adafruit_CharLCD
