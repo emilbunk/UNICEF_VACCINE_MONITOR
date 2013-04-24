@@ -1,6 +1,6 @@
 import os, time. urllib2, httplib, csv, sys
 
-sys.path.append('/home/pi/UNICEF')
+sys.path.append('/home/pi/UNICEF_VACCINE_MONITOR')
 from Adafruit_CharLCD import Adafruit_CharLCD
 
 lcd = Adafruit_CharLCD()
@@ -97,7 +97,7 @@ while True:
 		
 		if min(values) < 2 or max(values) > 8:
 			os.system('gpio -g write 10 1')
-			os.system('sh /home/pi/UNICEF/piezo_alarm.sh &')
+			os.system('sh /home/pi/UNICEF_VACCINE_MONITOR/piezo_alarm.sh &')
 		else:
 			os.system('gpio -g write 10 0')
 		
