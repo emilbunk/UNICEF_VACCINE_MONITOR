@@ -47,8 +47,7 @@ if(!empty($Messages)){
 			break;
 			
 			default:
-				sendMessage($sender, "\"" + $content + "\" does not match any known request, try again.")
-			break;
+				sendMessage($sender, "\"" + $content + "\" does not match any known request, try again.");
 		}
 		deleteMessage($index);
 	}
