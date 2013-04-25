@@ -17,9 +17,7 @@ if(!$freeDiskSpace) {
 	
 	while( $id = $feeds -> fetch_array()) {
 		$feedname = "feed_".$id[0];
-		$query = "DELETE FROM ".$feedname."WHERE time < ".$timeLimit;
-		//$db->query("DELETE FROM '$feedname' WHERE time < '$timeLimit'");
-		echo $query."\n";
+		$db->query("DELETE FROM '$feedname' WHERE time < '$timeLimit'");
 		$db->query($query);
 	}
 }
