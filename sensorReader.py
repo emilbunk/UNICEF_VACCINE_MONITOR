@@ -1,4 +1,7 @@
 import os, time, urllib2, httplib, csv, sys
+import RPi.GPIO as GPIO
+
+GPIO.cleanup()
 
 from Adafruit_CharLCD import Adafruit_CharLCD
 
@@ -8,7 +11,14 @@ lcd.message("Awaiting first\nmeasurments")
 
 os.system('sudo modprobe w1-gpio')
 os.system('sudo modprobe w1-therm')
-os.system('gpio -g mode 10 out')
+
+GPIO.setmode(GPIO.BOARD)
+# Set led pin as out, and turn it of.
+GPIO.setup(10, GPIO.OUT)
+GPIO.setup(10, GPIO.LOW)
+
+# Set optocoupler pin as in, where high readings means that a external power source is available.
+GPIO.setup(8, GPIO.IN)
 
 base_dir = '/sys/bus/w1/devices'
 
@@ -97,16 +107,15 @@ while True:
 		updateLCD(values, devices)
 		
 		if min(values) < 2 or max(values) > 8:
-			os.system('gpio -g write 10 1')
+			GPIO.output(10, GPIO.HIGH)
 			os.system('sh /home/pi/UNICEF_VACCINE_MONITOR/piezo_alarm.sh &')
 		else:
-			os.system('gpio -g write 10 0')
+			GPIO.output(10, GPIO.LOW)
 		
-		if data and readCount > 1:
-			url = "http://localhost/emoncms/input/post.json?json={" + data[:-1] + "&apikey=" + settings['apikey']
-			urllib2.urlopen(url)
-			url = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data[:-1] + "}&apikey=" + settings['remoteapikey']
-			urllib2.urlopen(url)
-			readCount = 0
-		
-	time.sleep(10)
+	if data and readCount > 5:
+		data += ("power:" + GPIO.input(8))
+		url = "http://localhost/emoncms/input/post.json?json={" + data + "&apikey=" + settings['apikey']
+		urllib2.urlopen(url)
+		url = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data + "}&apikey=" + settings['remoteapikey']
+		urllib2.urlopen(url)
+		readCount = 0
