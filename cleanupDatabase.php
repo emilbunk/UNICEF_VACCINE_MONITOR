@@ -5,7 +5,8 @@ $freeDiskSpace = disk_free_space("/");
 if(!$freeDiskSpace) {
 	echo "diskspace could not be read";
 } elseif ($freeDiskSpace > 314572800) { //300 mb limit
-	echo "Remaining disk space is surfficiant"
+	echo "Remaining disk space is surfficiant";
+	echo $freeDiskSpace;
 } else {
 	$db = new mysqli('localhost', 'root', 'raspberry', 'emoncms');
 	
