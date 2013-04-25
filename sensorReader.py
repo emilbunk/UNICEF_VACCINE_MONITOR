@@ -1,7 +1,6 @@
 import os, time, urllib2, httplib, csv, sys
 import RPi.GPIO as GPIO
 
-GPIO.cleanup()
 
 from Adafruit_CharLCD import Adafruit_CharLCD
 
@@ -70,11 +69,11 @@ def read_temp(sensorAddress):
 def updateLCD(values, devices):
 	if max(values) > 8:
 		temp = "ALARM %+2.2f\n" %(float(max(values))/100)
-		index = max(enumerate(values), key=operator.itemgetter(1))
+		index = argmax(values)
 		mes = devices[index] + temp
 	elif min(values) < 2:
 		temp = "ALARM %+2.2f\n" %(float(min(values))/100)
-		index = min(enumerate(values), key=operator.itemgetter(1))
+		index = argmin(values)
 		mes = devices[index] + temp
 	else:
 		mes = "Cur. max:%+2.2f\n" %(float(max(values))/100)
