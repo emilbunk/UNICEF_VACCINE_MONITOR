@@ -10,6 +10,7 @@ lcd.message("Awaiting first\nmeasurments")
 
 os.system('sudo modprobe w1-gpio')
 os.system('sudo modprobe w1-therm')
+time.sleep(1)
 
 GPIO.setmode(GPIO.BCM)
 # Set led pin as out, and turn it of.
@@ -112,7 +113,7 @@ while True:
 			GPIO.output(10, GPIO.LOW)
 		
 	if data and readCount > 5:
-		data += ("power:" + GPIO.input(8))
+		data += ("power:" + str(GPIO.input(8)))
 		url = "http://localhost/emoncms/input/post.json?json={" + data + "&apikey=" + settings['apikey']
 		urllib2.urlopen(url)
 		url = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data + "}&apikey=" + settings['remoteapikey']
