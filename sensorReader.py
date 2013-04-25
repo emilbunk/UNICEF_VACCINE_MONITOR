@@ -11,7 +11,7 @@ lcd.message("Awaiting first\nmeasurments")
 os.system('sudo modprobe w1-gpio')
 os.system('sudo modprobe w1-therm')
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 # Set led pin as out, and turn it of.
 GPIO.setup(10, GPIO.OUT)
 GPIO.setup(10, GPIO.LOW)
