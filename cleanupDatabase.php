@@ -4,7 +4,7 @@ $freeDiskSpace = disk_free_space("/");
 
 if(!$freeDiskSpace) {
 	echo "diskspace could not be read";
-} elseif ($freeDiskSpace > 3145728000000) { //300 mb limit
+} elseif ($freeDiskSpace > 3145728000) { //300 mb limit
 	echo "Remaining disk space is surfficiant";
 	echo $freeDiskSpace;
 } else {
@@ -17,7 +17,7 @@ if(!$freeDiskSpace) {
 	
 	while( $id = $feeds -> fetch_array()) {
 		$feedname = "feed_".$id[0];
-		$db->query("DELETE FROM '$feedname' WHERE time < '$timeLimit'");
+		$query = "DELETE FROM ".$feedname." WHERE time < ".$timeLimit;
 		$db->query($query);
 	}
 }
