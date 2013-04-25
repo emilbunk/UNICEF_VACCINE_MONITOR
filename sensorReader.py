@@ -98,7 +98,7 @@ while True:
 		val = read_temp(address[:-1])
 		if val != False:
 			values.append(int(val))
-			data += adrress[:-1] + ":" + val + ","
+			data += address[:-1] + ":" + val + ","
 		else:
 			data = None
 			break
