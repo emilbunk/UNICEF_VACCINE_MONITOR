@@ -106,7 +106,7 @@ while True:
 	if values:
 		updateLCD(values, devices)
 		
-		if min(values) < 2 or max(values) > 8:
+		if min(values) < 200 or max(values) > 800:
 			GPIO.output(10, GPIO.HIGH)
 			os.system('sh /home/pi/UNICEF_VACCINE_MONITOR/piezo_alarm.sh &')
 		else:
