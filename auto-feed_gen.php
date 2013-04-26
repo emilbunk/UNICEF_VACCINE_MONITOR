@@ -16,6 +16,7 @@ while( $row = $input -> fetch_assoc()) {
 	$numRows = $temp->num_rows;
 	echo $numRows;
 	if($numRows = 0) {
+		echo "start";
 		//insert new feed into feeds table
 		$db->query("INSERT INTO feeds (name, userid, tag, value, datatype, public) VALUES ('$name', '1', 'fridge', '$val', '1', '0')");
 		
