@@ -15,11 +15,7 @@ while( $row = $input -> fetch_assoc()) {
 	$temp = $db->query("SELECT * FROM feeds WHERE name = '$name'");
 	$numRows = $temp->num_rows;
 	echo $numRows;
-	if($numRows > 0) {
-		// Sensor is already added to feeds
-		echo "feed already added.";
-		break; 
-	} else {
+	if($numRows = 0) {
 		//insert new feed into feeds table
 		$db->query("INSERT INTO feeds (name, userid, tag, value, datatype, public) VALUES ('$name', '1', 'fridge', '$val', '1', '0')");
 		
