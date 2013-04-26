@@ -85,17 +85,16 @@ def updateLCD(values, devices):
 	lcd.message(mes)
 
 settings = get_settings()
-readCount = 0
+lastDataPush = time.time()
+pushFreq = 10 # Data push to database in seconds
 
 while True:
-	readCount += 1
 	devices = get_device_address()
 	data = ""
 	
 	values = list()
 	
-	print("Readcount: " + str(readCount) + "\n")
-	print("Getting values\n")
+	print("Getting values")
 	
 	for address in devices:
 		val = read_temp(address[:-1])
@@ -105,8 +104,11 @@ while True:
 		else:
 			data = None
 			break
-	
-	print("Values retrieved: " + data + "\n")
+			
+	if data:
+		print("Values retrieved: " + data)
+	else:
+		print("No values.")
 	
 	if values:
 		updateLCD(values, devices)
@@ -117,10 +119,10 @@ while True:
 		else:
 			GPIO.output(10, GPIO.LOW)
 		
-	if data and readCount > 5:
+	if data and time.time() - lastDataPush > pushFreq
 		data += ("power:" + str(GPIO.input(8)))
 		url = "http://localhost/emoncms/input/post.json?json={" + data + "&apikey=" + settings['apikey']
 		urllib2.urlopen(url)
 		url = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data + "}&apikey=" + settings['remoteapikey']
 		urllib2.urlopen(url)
-		readCount = 0
+		lastDataPush = time.time()
