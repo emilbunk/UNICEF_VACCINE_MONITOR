@@ -38,17 +38,15 @@ def get_device_address():
 	devices = f.readlines()
 	f.close()
 	return devices
-	
-def remove_sensor(sensorAddress):
-    tmp = "echo " + sensorAddress + " > sudo " + base_dir + "/w1_bus_master1/w1_master_remove"
-    os.system(tmp)
 
 def read_temp_raw(sensorAddress):
     device_file = base_dir + '/' + sensorAddress + '/w1_slave'
-    f = open(device_file, 'r')
-    lines = f.readlines()
-    f.close()
-    return lines
+    	if(os.path.exists(device_file):
+    		f = open(device_file, 'r')
+    		lines = f.readlines()
+    		f.close()
+    		return lines
+    return ""
 
 def read_temp(sensorAddress):
     lines = read_temp_raw(sensorAddress)
@@ -59,11 +57,11 @@ def read_temp(sensorAddress):
         else:
         	break
         	
-    if lines[0].strip()[-3:] != 'YES':
-    	remove_sensor(sensorAddress)
+    equals_pos = lines[1].find('t=')        	
+    if lines[0].strip()[-3:] != 'YES' or  lines[1][equals_pos+1:equals_pos+3] =='85':
     	return False
     
-    equals_pos = lines[1].find('t=')
+
     return lines[1][equals_pos+2:-2]
         
 def updateLCD(values, devices):
