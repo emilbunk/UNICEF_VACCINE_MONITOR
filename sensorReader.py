@@ -64,8 +64,7 @@ def read_temp(sensorAddress):
     	return False
     
     equals_pos = lines[1].find('t=')
-    temp_string = lines[1][equals_pos+2:]
-    return temp_string[0:4]
+    return lines[1][equals_pos+2:-1]
         
 def updateLCD(values, devices):
 	if max(values) > 8:
@@ -120,6 +119,7 @@ while True:
 			GPIO.output(10, GPIO.LOW)
 		
 	if data and time.time() - lastDataPush > pushFreq:
+		print("data pushed")
 		data += ("power:" + str(GPIO.input(8)))
 		url = "http://localhost/emoncms/input/post.json?json={" + data + "&apikey=" + settings['apikey']
 		urllib2.urlopen(url)
