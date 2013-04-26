@@ -10,7 +10,7 @@ lcd.message("Awaiting first\nmeasurments")
 
 os.system('sudo modprobe w1-gpio')
 os.system('sudo modprobe w1-therm')
-time.sleep(1)
+time.sleep(10) # wait to give the 1-wire software time to find the connected sensors
 
 GPIO.setmode(GPIO.BCM)
 # Set led pin as out, and turn it of.
