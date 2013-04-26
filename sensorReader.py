@@ -91,8 +91,6 @@ while True:
 	
 	values = list()
 	
-	print("Getting values")
-	
 	for address in devices:
 		val = read_temp(address[:-1])
 		if val != False:
@@ -101,11 +99,6 @@ while True:
 		else:
 			data = None
 			break
-			
-	if data:
-		print("Values retrieved: " + data)
-	else:
-		print("No values.")
 	
 	if values:
 		updateLCD(values, devices)
