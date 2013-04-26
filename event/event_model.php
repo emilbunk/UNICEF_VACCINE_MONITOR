@@ -316,8 +316,8 @@ function check_feed_event($feedid,$updatetime,$feedtime,$value,$row=NULL) {
                 
                 case 5:
                 // SMS
-                $message = "A temperature of ".$value." has been read, check equipment for failure as soon as possible!";
-					echo "sms send!";
+					$message = "Sensor ".$feed['name']." has measured: ".$value.", check equipment for failure as soon as possible!";
+
 					$xml_data =	"<request>".
    								"<Index>1</Index>".
     							"<Phones><Phone>".$row['setphonenumber']."</Phone></Phones>".
@@ -340,6 +340,7 @@ function check_feed_event($feedid,$updatetime,$feedtime,$value,$row=NULL) {
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 					$output = curl_exec($ch);
 					curl_close($ch);
+					echo "sms send!";
 					break;
             }
         // update the lasttime called

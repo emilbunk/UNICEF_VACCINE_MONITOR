@@ -120,7 +120,7 @@ while True:
 		
 	if data and time.time() - lastDataPush > pushFreq:
 		print("data pushed")
-		data += ("power:" + str(GPIO.input(8)))
+		data += ("power-source:" + str(GPIO.input(8)))
 		url = "http://localhost/emoncms/input/post.json?json={" + data + "&apikey=" + settings['apikey']
 		urllib2.urlopen(url)
 		url = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data + "}&apikey=" + settings['remoteapikey']
