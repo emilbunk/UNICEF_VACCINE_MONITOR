@@ -15,7 +15,7 @@ while( $row = $input -> fetch_assoc()) {
 	$temp = $db->query("SELECT * FROM feeds WHERE name = '$name'");
 	$numRows = $temp->num_rows;
 	echo $numRows;
-	if($numRows = 0) {
+	if($numRows > 0) {
 		// Sensor is already added to feeds
 		echo "feed already added.";
 		break; 
