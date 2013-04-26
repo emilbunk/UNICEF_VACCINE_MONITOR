@@ -64,7 +64,7 @@ def read_temp(sensorAddress):
     	return False
     
     equals_pos = lines[1].find('t=')
-    return lines[1][equals_pos+2:-1]
+    return lines[1][equals_pos+2:-2]
         
 def updateLCD(values, devices):
 	if max(values) > 8:
