@@ -110,7 +110,6 @@ while True:
 			GPIO.output(10, GPIO.LOW)
 		
 	if data and time.time() - lastDataPush > pushFreq:
-		print("data pushed")
 		data += ("power-source:" + str(GPIO.input(8)))
 		url = "http://localhost/emoncms/input/post.json?json={" + data + "&apikey=" + settings['apikey']
 		urllib2.urlopen(url)
