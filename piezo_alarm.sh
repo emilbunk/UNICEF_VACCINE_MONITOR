@@ -15,12 +15,9 @@ tone () {
   sleep "$time"
 }
 
+tone 59 0.2
 tone 60 0.2
-tone 55 0.1
-tone 55 0.1
-tone 57 0.2
-tone 55 0.2
-tone 0 0.2
+tone 0 0
 tone 59 0.2
 tone 60 0.2
 tone 0 0
