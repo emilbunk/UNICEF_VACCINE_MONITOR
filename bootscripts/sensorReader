@@ -17,7 +17,7 @@ export HOME
 case "$1" in
     start)
         echo "Starting monitoring"
-        /home/pi/UNICEF/sensorReader.py 2>&1 &
+        /home/pi/UNICEF_VACCINE_MONITOR/sensorReader.py 2>&1 &
     ;;
     stop)
         echo "Stopping monitoring"
