@@ -41,12 +41,12 @@ def get_device_address():
 
 def read_temp_raw(sensorAddress):
     device_file = base_dir + '/' + sensorAddress + '/w1_slave'
-    	if(os.path.exists(device_file):
-    		f = open(device_file, 'r')
-    		lines = f.readlines()
-    		f.close()
-    		return lines
-    return ""
+    if(os.path.exists(device_file):
+		f = open(device_file, 'r')
+		lines = f.readlines()
+		f.close()
+		return lines
+	return ""
 
 def read_temp(sensorAddress):
     lines = read_temp_raw(sensorAddress)
