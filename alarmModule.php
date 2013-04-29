@@ -31,7 +31,7 @@ while($row = $input -> fetch_assoc()) {
 	echo "\n";
 	echo time();
 	echo "\n";
-	if($time - time() < 120) { // if reading is less than 2 min old
+	if(time()-$time < 120) { // if reading is less than 2 min old
 		if($val > $fridgeMax OR $val < $fridgeLow) {
 			$alarms += "[".$name."] ".$row['value'].", ";
 		}
