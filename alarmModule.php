@@ -27,15 +27,12 @@ while($row = $input -> fetch_assoc()) {
 	$time = strtotime($row['time']);
 
 	if(time()-$time < 120) { // if reading is less than 2 min old
-		echo "pass";
 		if($val > $fridgeMax OR $val < $fridgeLow) {
 			$alarms = $alarms."[".$name."] ".$row['value'].", ";
 		}
 		
 	}
 }
-echo "\n";
-echo $alarms;
 
 if(strlen($alarms) > 0) {
 	$mutetime = time() - 5 * 60;
@@ -44,6 +41,7 @@ if(strlen($alarms) > 0) {
 	while($row = $users -> fetch_assoc()) {
 		$phoneNumber = $row['setphonenumber'];
 		$message = "ALARM: ".substr($alarms, 0, -2);
+		echo $message;
 		sendMessage($phoneNumber, $message);
 		$id = $row['id'];
 		$updateTime = time();
