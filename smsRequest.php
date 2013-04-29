@@ -37,8 +37,14 @@ if(!empty($Messages)){
 			break;
 
 			case "ala": // Alarm
-				$stmt = $db->query("INSERT INTO event (userid, eventfeed, eventtype, action, setphonenumber, lasttime, mutetime) VALUES ('1','0','7', '5', '$sender','0','300')");
-				sendMessage($sender, "You have been signed up for an alarm");
+				$check = $db->query("SELECT * FROM event WHERE setphonenumber = '$sender'")
+				if($row = $check -> fetch_assoc()) {
+					$db->query("DELETE FROM event WHERE setphonenumber = '$sender'");
+					sendMessage($sender, "You have been taken off the alarm list");
+				} else {
+					$db->query("INSERT INTO event (userid, eventfeed, eventtype, action, setphonenumber, lasttime, mutetime) VALUES ('1','0','7', '5', '$sender','0','300')");
+					sendMessage($sender, "You have been signed up for alarms");
+				}
 			break;
 
 			case "reb": // Reboot

@@ -43,9 +43,7 @@ if(strlen($alarms) > 0) {
 	
 	while($row = $users -> fetch_assoc()) {
 		$phoneNumber = $row['setphonenumber'];
-		echo $phoneNumber + "\n";
 		$message = "ALARM: ".substr($alarms, 0, -2);
-		echo $message;
 		sendMessage($phoneNumber, $message);
 		$id = $row['id'];
 		$updateTime = time();
