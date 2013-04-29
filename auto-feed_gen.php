@@ -14,9 +14,7 @@ while( $row = $input -> fetch_assoc()) {
 	$val = intval($row['value']);
 	$temp = $db->query("SELECT * FROM feeds WHERE name = '$name'");
 	$numRows = $temp->num_rows;
-	echo $numRows;
-	if($numRows == 1) {
-		echo "start";
+	if($numRows == 0) {
 		//insert new feed into feeds table
 		$db->query("INSERT INTO feeds (name, userid, tag, value, datatype, public) VALUES ('$name', '1', 'fridge', '$val', '1', '0')");
 		
