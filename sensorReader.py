@@ -111,8 +111,18 @@ while True:
 		
 	if data and time.time() - lastDataPush > pushFreq:
 		data += ("power-source:" + str(GPIO.input(8)))
-		url = "http://localhost/emoncms/input/post.json?json={" + data + "}&apikey=" + settings['apikey']
-		urllib2.urlopen(url)
-		url = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data + "}&apikey=" + settings['remoteapikey']
-		urllib2.urlopen(url)
+		
+		url1 = "http://localhost/emoncms/input/post.json?json={" + data + "}&apikey=" + settings['apikey']
+		
+		url2 = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data + "}&apikey=" + settings['remoteapikey']
+		
+		try:
+			urllib2.urlopen(url1)
+		except urllib2.URLError:
+			print "No connection!"
+			
+		try:
+			urllib2.urlopen(url2)
+		except urllib2.URLError:
+		
 		lastDataPush = time.time()
