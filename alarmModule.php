@@ -22,6 +22,7 @@ $input = $db->query("SELECT * FROM feeds WHERE tag = 'fridge'");
 $alarms = "";
 
 while($row = $input -> fetch_assoc()) {
+	echo "bum";
 	$name = $row['name'];
 	$val = floatval($row['value']);
 	$time = strtotime($row['time']);
@@ -32,6 +33,8 @@ while($row = $input -> fetch_assoc()) {
 		}
 	}
 }
+echo "\n";
+echo $alarms;
 
 if(strlen($alarms) > 0) {
 	$mutetime = time() - 5 * 60;
@@ -39,8 +42,9 @@ if(strlen($alarms) > 0) {
 	
 	while($row = $input -> fetch_assoc()) {
 	$phoneNumber = $row['setphonenumber'];
-	
+	echo $phoneNumber + "\n";
 	$message = "ALARM: ".substring($alarms, 0, -2);
+	echo $message;
 	sendMessage($phoneNumber, $message);
 	}
 }
