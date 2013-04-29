@@ -41,9 +41,7 @@ if(strlen($alarms) > 0) {
 	$mutetime = time() - 5 * 60;
 	$users = $db -> query("SELECT setphonenumber FROM event WHERE lasttime < '$mutetime'");
 	
-	echo $users -> num_rows;
-	
-	while($row = $input -> fetch_assoc()) {
+	while($row = $users -> fetch_assoc()) {
 		$phoneNumber = $row['setphonenumber'];
 		echo $phoneNumber + "\n";
 		$message = "ALARM: ".substring($alarms, 0, -2);
