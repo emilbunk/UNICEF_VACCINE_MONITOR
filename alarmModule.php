@@ -17,7 +17,7 @@ if($db->connect_errno > 0){
 
 
 // Check Fridges
-$input = $db->query("SELECT * FROM feeds WHERE tag = fridge");
+$input = $db->query("SELECT * FROM feeds WHERE tag = 'fridge'");
 
 $alarms = "";
 
@@ -42,6 +42,6 @@ if(strlen($alarms) > 0) {
 	
 	$message = "ALARM: ".substring($alarms, 0, -2);
 	sendMessage($phoneNumber, $message);
-	}
+	}$
 }
 ?>
