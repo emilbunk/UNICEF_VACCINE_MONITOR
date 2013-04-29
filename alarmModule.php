@@ -43,8 +43,4 @@ if(strlen($alarms) > 0) {
 	$message = "ALARM: ".substring($alarms, 0, -2);
 	sendMessage($phoneNumber, $message);
 }
-
-
-
 ?>
-
