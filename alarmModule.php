@@ -47,8 +47,8 @@ if(strlen($alarms) > 0) {
 		$message = "ALARM: ".substr($alarms, 0, -2);
 		echo $message;
 		sendMessage($phoneNumber, $message);
-		$id = $row[
-		$db -> query("UPDATE event SET lasttime = time() WHERE id = '$row['id']'");
+		$id = $row['id'];
+		$db -> query("UPDATE event SET lasttime = time() WHERE id = '$id'");
 	}
 }
 ?>
