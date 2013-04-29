@@ -36,7 +36,7 @@ if(!empty($Messages)){
 			break;
 
 			case "ala": // Alarm
-				$check = $db->query("SELECT * FROM event WHERE setphonenumber = '$sender'")
+				$check = $db->query("SELECT * FROM event WHERE setphonenumber = '$sender'");
 				if($check->num_rows > 0) {
 					$db->query("DELETE FROM event WHERE setphonenumber = '$sender'");
 					sendMessage($sender, "You have been taken off the alarm list");
