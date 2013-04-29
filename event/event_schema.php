@@ -28,7 +28,7 @@ $schema['event'] = array(
   'mutetime' => array('type' => 'int(11)'),
   'priority' => array('type' => 'int(3)', 'default'=>0),
   'delaytime' => array('type' => 'int(11)'),
-  'setphonenumber' => array('type' => 'int(11)'),
+  'setphonenumber' => array('type' => 'text'),
   'message' => array('type' => 'text')
 );
 

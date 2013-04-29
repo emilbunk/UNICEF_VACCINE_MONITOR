@@ -16,7 +16,6 @@ if(!empty($Messages)){
 		$content = $mes -> Content;
 		echo $content."\n";
 		$sender = $mes -> Phone;
-		$sender = substr($sender, 3);
 		$index = $mes -> Index;
 		switch (strtolower(substr($content, 0, 3))) {
 			case "api":
@@ -38,7 +37,7 @@ if(!empty($Messages)){
 
 			case "ala": // Alarm
 				$check = $db->query("SELECT * FROM event WHERE setphonenumber = '$sender'")
-				if($check -> num_rows > 0) {
+				if($check->num_rows > 0) {
 					$db->query("DELETE FROM event WHERE setphonenumber = '$sender'");
 					sendMessage($sender, "You have been taken off the alarm list");
 				} else {
