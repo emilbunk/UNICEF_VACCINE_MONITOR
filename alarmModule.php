@@ -22,19 +22,16 @@ $input = $db->query("SELECT * FROM feeds WHERE tag = 'fridge'");
 $alarms = "";
 
 while($row = $input -> fetch_assoc()) {
-	echo "bum";
-	echo "\n";
 	$name = $row['name'];
 	$val = floatval($row['value']);
 	$time = strtotime($row['time']);
-	echo $time;
-	echo "\n";
-	echo time();
-	echo "\n";
+
 	if(time()-$time < 120) { // if reading is less than 2 min old
+		echo "pass";
 		if($val > $fridgeMax OR $val < $fridgeLow) {
-			$alarms += "[".$name."] ".$row['value'].", ";
+			$alarms = $alarms."[".$name."] ".$row['value'].", ";
 		}
+		
 	}
 }
 echo "\n";
