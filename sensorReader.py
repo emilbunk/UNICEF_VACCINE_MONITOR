@@ -124,5 +124,6 @@ while True:
 		try:
 			urllib2.urlopen(url2)
 		except urllib2.URLError:
+			print "No connection!"
 		
 		lastDataPush = time.time()
