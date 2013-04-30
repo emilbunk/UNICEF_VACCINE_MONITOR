@@ -61,6 +61,7 @@ if(!empty($Messages)){
 						} else {
 							$row = $db -> fetch_assoc();
 							sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]");
+						}
 					break;
 					
 					case "set":
@@ -84,10 +85,10 @@ if(!empty($Messages)){
 							} else {
 							sendMessage($sender, "not a know tag code");
 							break;
-							
 							}
 							$db -> query("UPDATE feeds SET tag = '$tag' WHERE name = '$sensor'");
 							sendMessage($sender, "Sensor: ".$sensor.", has changed tag to: ".$tag);
+						}
 					break;
 				}
 			break;
