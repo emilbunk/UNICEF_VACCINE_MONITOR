@@ -67,20 +67,21 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						if(intval($content[27]) == 1){
+						echo $content[27];
+						if($content[27] == "1"){
 							// fridge
 							$tag = "fridge";
 							
-						} elseif(intval($content[27]) == 2) {
+						} elseif($content[27] == "2") {
 							// freezer
 							$tag = "freezer";
 							
-						} elseif(intval($content[27]) == 3) {
+						} elseif($content[27] == "3") {
 							// outdoor
 							$tag = "outdoor";
 							
 						} else {
-						sendMessage($sender, "not a know tag code");
+						sendMessage($sender, "not a known tag code");
 						break;
 						}
 						$db -> query("UPDATE feeds SET tag = '$tag' WHERE name = '$sensor'");
