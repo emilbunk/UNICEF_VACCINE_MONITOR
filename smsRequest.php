@@ -67,15 +67,15 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						if(intval($content[26]) == 1){
+						if(intval($content[27]) == 1){
 							// fridge
 							$tag = "fridge";
 							
-						} elseif(intval($content[26]) == 2) {
+						} elseif(intval($content[27]) == 2) {
 							// freezer
 							$tag = "freezer";
 							
-						} elseif(intval($content[26]) == 3) {
+						} elseif(intval($content[27]) == 3) {
 							// outdoor
 							$tag = "outdoor";
 							
