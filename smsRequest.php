@@ -51,8 +51,49 @@ if(!empty($Messages)){
 				exec('sudo reboot');
 			break;
 			
+			case "sen": // Sensor
+				switch (strtolower(substr($content, 7, 9))) {
+					case "get":
+						$sensor = strtolower($content, 11, 24);
+						$db->query("SELECT * FROM feeds WHERE name = '$sensor'");
+						if( $db == FALSE or $db->num_row < 1) {
+							sendMessage($sender, "could not find sensor: ".$sensor);
+						} else {
+							$row = $db -> fetch_assoc();
+							sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]";
+					break;
+					
+					case "set":
+						$sensor = strtolower($content, 11, 24);
+						$db->query("SELECT * FROM feeds WHERE name = '$sensor'");
+						if( $db == FALSE or $db->num_row < 1) {
+							sendMessage($sender, "could not find sensor: ".$sensor);
+						} else {
+							if(intval($content[26]) == 1){
+								// fridge
+								$tag = "fridge";
+								
+							} elseif(intval($content[26]) == 2) {
+								// freezer
+								$tag = "freezer";
+								
+							} elseif(intval($content[26]) == 3) {
+								// outdoor
+								$tag = "outdoor";
+								
+							} else {
+							sendMessage($sender, "not a know tag code");
+							break;
+							
+							}
+							$db -> query("UPDATE feeds SET tag = '$tag' WHERE name = '$sensor'");
+							sendMessage($sender, "Sensor: ".$sensor.", has changed tag to: ".$tag);
+					break;
+				}
+			break;
+			
 			default:
-				sendMessage($sender, "\"" + $content + "\" does not match any known request, try again.");
+				sendMessage($sender, "\"".$content."\" does not match any known request, try again.");
 		}
 		deleteMessage($index);
 	}
