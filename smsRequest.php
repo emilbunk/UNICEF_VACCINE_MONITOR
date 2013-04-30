@@ -55,7 +55,7 @@ if(!empty($Messages)){
 				$sensor = strtolower(substr($content, 11, 15));
 				echo $sensor;
 				
-				echo $content[25];
+				echo substr($content, 27, 1);
 				echo $content[26];
 				echo $content[27];
 				echo $content[28];
