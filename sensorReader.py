@@ -46,7 +46,7 @@ def read_temp_raw(sensorAddress):
 		lines = f.readlines()
 		f.close()
 		return lines
-	return ' '
+	return '  '
 
 def read_temp(sensorAddress):
     lines = read_temp_raw(sensorAddress)
