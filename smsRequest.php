@@ -61,7 +61,7 @@ if(!empty($Messages)){
 				}
 				switch (strtolower(substr($content, 7, 3))) {
 					case "get":
-						$row = $db -> fetch_assoc();
+						$row = $result -> fetch_assoc();
 						sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]");
 					
 					break;
