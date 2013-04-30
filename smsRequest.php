@@ -54,7 +54,9 @@ if(!empty($Messages)){
 			case "sen": // Sensor
 				switch (strtolower(substr($content, 7, 9))) {
 					case "get":
+						echo "get";
 						$sensor = strtolower($content, 11, 24);
+						echo $sensor;
 						$db->query("SELECT * FROM feeds WHERE name = '$sensor'");
 						if( $db == FALSE or $db->num_row < 1) {
 							sendMessage($sender, "could not find sensor: ".$sensor);
@@ -65,7 +67,9 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
+						echo "set";
 						$sensor = strtolower($content, 11, 24);
+						echo $sensor;
 						$db->query("SELECT * FROM feeds WHERE name = '$sensor'");
 						if( $db == FALSE or $db->num_row < 1) {
 							sendMessage($sender, "could not find sensor: ".$sensor);
