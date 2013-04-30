@@ -60,7 +60,7 @@ if(!empty($Messages)){
 							sendMessage($sender, "could not find sensor: ".$sensor);
 						} else {
 							$row = $db -> fetch_assoc();
-							sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]";
+							sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]");
 					break;
 					
 					case "set":
