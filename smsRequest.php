@@ -55,11 +55,6 @@ if(!empty($Messages)){
 				$sensor = strtolower(substr($content, 11, 15));
 				echo $sensor;
 				
-				echo substr($content, 27, 1);
-				echo $content[26];
-				echo $content[27];
-				echo $content[28];
-				
 				$result = $db->query("SELECT * FROM feeds WHERE name = '$sensor'");
 				if($result->num_rows < 1) {
 					sendMessage($sender, "could not find sensor: ".$sensor);
@@ -73,15 +68,15 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						if($content{27} == '1'){
+						if(substr($content, 27, 1) == '1'){
 							// fridge
 							$tag = "fridge";
 							
-						} elseif($content{27} == '2') {
+						} elseif(substr($content, 27, 1) == '2') {
 							// freezer
 							$tag = "freezer";
 							
-						} elseif($content{27} == '3') {
+						} elseif(substr($content, 27, 1) == '3') {
 							// outdoor
 							$tag = "outdoor";
 							
