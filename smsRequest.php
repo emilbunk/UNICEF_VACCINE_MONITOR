@@ -55,10 +55,10 @@ if(!empty($Messages)){
 				$sensor = strtolower(substr($content, 11, 15));
 				echo $sensor;
 				
-				echo $content{25};
-				echo $content{26};
-				echo $content{27};
-				echo $content{28};
+				echo $content[25];
+				echo $content[26];
+				echo $content[27];
+				echo $content[28];
 				
 				$result = $db->query("SELECT * FROM feeds WHERE name = '$sensor'");
 				if($result->num_rows < 1) {
