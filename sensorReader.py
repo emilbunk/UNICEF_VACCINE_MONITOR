@@ -58,9 +58,9 @@ def read_temp(sensorAddress):
         	break
         	
     equals_pos = lines[1].find('t=')        	
-    if lines[0].strip()[-3:] != 'YES' or  lines[1][equals_pos+1:equals_pos+3] =='85':
-    	return False
-    
+    if lines[0].strip()[-3:] != 'YES':
+    	if lines[1][equals_pos+1:equals_pos+3] =='85':
+    		return False
 
     return lines[1][equals_pos+2:-2]
         
@@ -119,11 +119,11 @@ while True:
 		try:
 			urllib2.urlopen(url1)
 		except urllib2.URLError:
-			print "No connection!"
+			print "Cannot connect to localhost!"
 			
 		try:
 			urllib2.urlopen(url2)
 		except urllib2.URLError:
-			print "No connection!"
+			print "No connection to the internet!"
 		
 		lastDataPush = time.time()
