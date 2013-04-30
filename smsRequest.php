@@ -54,43 +54,37 @@ if(!empty($Messages)){
 			case "sen": // Sensor
 				$sensor = strtolower(substr($content, 11, 12));
 				echo $sensor;
+				$result = $db->query("SELECT * FROM feeds WHERE name = '$sensor'");
+				if($result->num_row < 1) {
+					sendMessage($sender, "could not find sensor: ".$sensor);
+					break;
+				}
 				switch (strtolower(substr($content, 7, 3))) {
 					case "get":
-						echo "get";
-						$db->query("SELECT * FROM feeds WHERE name = '$sensor'");
-						if( $db == FALSE or $db->num_row < 1) {
-							sendMessage($sender, "could not find sensor: ".$sensor);
-						} else {
-							$row = $db -> fetch_assoc();
-							sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]");
-						}
+						$row = $db -> fetch_assoc();
+						sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]");
+					
 					break;
 					
 					case "set":
-						echo "set";
-						$db->query("SELECT * FROM feeds WHERE name = '$sensor'");
-						if( $db == FALSE or $db->num_row < 1) {
-							sendMessage($sender, "could not find sensor: ".$sensor);
+						if(intval($content[26]) == 1){
+							// fridge
+							$tag = "fridge";
+							
+						} elseif(intval($content[26]) == 2) {
+							// freezer
+							$tag = "freezer";
+							
+						} elseif(intval($content[26]) == 3) {
+							// outdoor
+							$tag = "outdoor";
+							
 						} else {
-							if(intval($content[26]) == 1){
-								// fridge
-								$tag = "fridge";
-								
-							} elseif(intval($content[26]) == 2) {
-								// freezer
-								$tag = "freezer";
-								
-							} elseif(intval($content[26]) == 3) {
-								// outdoor
-								$tag = "outdoor";
-								
-							} else {
-							sendMessage($sender, "not a know tag code");
-							break;
-							}
-							$db -> query("UPDATE feeds SET tag = '$tag' WHERE name = '$sensor'");
-							sendMessage($sender, "Sensor: ".$sensor.", has changed tag to: ".$tag);
+						sendMessage($sender, "not a know tag code");
+						break;
 						}
+						$db -> query("UPDATE feeds SET tag = '$tag' WHERE name = '$sensor'");
+						sendMessage($sender, "Sensor: ".$sensor.", has changed tag to: ".$tag);
 					break;
 				}
 			break;
