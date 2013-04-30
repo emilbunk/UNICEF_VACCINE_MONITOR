@@ -54,7 +54,12 @@ if(!empty($Messages)){
 			case "sen": // Sensor
 				$sensor = strtolower(substr($content, 11, 15));
 				echo $sensor;
+				
+				echo $content{25};
+				echo $content{26};
 				echo $content{27};
+				echo $content{28};
+				
 				$result = $db->query("SELECT * FROM feeds WHERE name = '$sensor'");
 				if($result->num_rows < 1) {
 					sendMessage($sender, "could not find sensor: ".$sensor);
