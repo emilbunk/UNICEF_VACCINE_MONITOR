@@ -51,12 +51,12 @@ def read_temp_raw(sensorAddress):
 def read_temp(sensorAddress):
     lines = read_temp_raw(sensorAddress)
 
-    if lines = False or lines[0].strip()[-3:] != 'YES':
+    if lines == False or lines[0].strip()[-3:] != 'YES':
     	return False
     
         
     equals_pos = lines[1].find('t=')
-    if lines[1][equals_pos+1:equals_pos+3] =='85':
+    if lines[1][equals_pos+1:equals_pos+3] == '85':
     	return False
 	else:
 	    return lines[1][equals_pos+2:-2]

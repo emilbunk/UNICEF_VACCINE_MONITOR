@@ -52,7 +52,8 @@ if(!empty($Messages)){
 				exec('sudo reboot');
 			break;
 			
-			case "git": // Reboot
+			case "git": // git pull repository
+				sendMessage($sender, "Pulling newest repository from repository");
 				exec('cd /home/pi/UNICEF_VACCINE_MONITOR && git pull && cd -');
 			break;
 			
