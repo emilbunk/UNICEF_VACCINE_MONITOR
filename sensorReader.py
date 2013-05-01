@@ -95,9 +95,6 @@ while True:
 			dev.append(address)
 			values.append(int(val))
 			data += address[:-1] + ":" + val + ","
-		else:
-			data = None
-			break
 	
 	if values:
 		updateLCD(values, dev)
