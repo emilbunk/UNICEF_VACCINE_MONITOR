@@ -109,24 +109,28 @@ while True:
 		else:
 			GPIO.output(10, GPIO.LOW)
 			pushFreq = 60 * 5
-		
-	if data and time.time() - lastDataPush > pushFreq:
-		data += ("power-source:" + str(GPIO.input(8)))
-		
-		url1 = "http://localhost/emoncms/input/post.json?json={" + data + "}&apikey=" + settings['apikey']
-		
-		url2 = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data + "}&apikey=" + settings['remoteapikey']
-		
-		try:
-			urllib2.urlopen(url1)
-		except urllib2.URLError:
-			print "Cannot connect to localhost!"
 			
-		try:
-			urllib2.urlopen(url2)
-		except urllib2.URLError:
-			print "No connection to the internet!"
+		if time.time() - lastDataPush > pushFreq:
+			data += ("power-source:" + str(GPIO.input(8)))
+			
+			url1 = "http://localhost/emoncms/input/post.json?json={" + data + "}&apikey=" + settings['apikey']
+			
+			url2 = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data + "}&apikey=" + settings['remoteapikey']
+			
+			try:
+				urllib2.urlopen(url1)
+			except urllib2.URLError:
+				print "Cannot connect to localhost!"
+				
+			try:
+				urllib2.urlopen(url2)
+			except urllib2.URLError:
+				print "No connection to the internet!"
+			
+			lastDataPush = time.time()
+	else:
+		lcd.message("Awaiting\nmeasurments")
 		
-		lastDataPush = time.time()
+	
 		
 	time.sleep(15)
