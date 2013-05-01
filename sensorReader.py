@@ -129,8 +129,7 @@ while True:
 			
 			lastDataPush = time.time()
 	else:
+		lcd.clear()
 		lcd.message("Awaiting\nmeasurments")
-		
-	
-		
+
 	time.sleep(15)
