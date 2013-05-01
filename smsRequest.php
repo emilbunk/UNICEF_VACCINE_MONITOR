@@ -47,8 +47,13 @@ if(!empty($Messages)){
 			break;
 
 			case "reb": // Reboot
+				sendMessage($sender, "System will reboot now");
 				deleteMessage($index);
 				exec('sudo reboot');
+			break;
+			
+			case "git": // Reboot
+				exec('cd /home/pi/UNICEF_VACCINE_MONITOR && git pull && cd -');
 			break;
 			
 			case "sen": // Sensor
