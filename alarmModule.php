@@ -37,18 +37,17 @@ while($row = $input -> fetch_assoc()) {
 // Check Power source
 $input = $db->query("SELECT * FROM feeds WHERE tag = 'power-source'");
 
-$alarms = "";
-
 while($row = $input -> fetch_assoc()) {
 	if($row['value'] == '0') {
 		$time = strtotime($row['time']);
 		
-	if(time()-$time < 10 * 60) { // if reading is less than 10 min old
-		if(strlen($alarms) > 0) {
-			$alarms = $alarms." - ";
+		if(time()-$time < 10 * 60) { // if reading is less than 10 min old
+			if(strlen($alarms) > 0) {
+				$alarms = substr($alarms, 0, -2)." - ";
+			}
 		}
 		
-		$alarms = $alarms."The power-grid seems to be down!";
+		$alarms = $alarms."The power-grid seems to be down!, ";
 	}
 }
 
@@ -66,4 +65,4 @@ if(strlen($alarms) > 0) {
 		$updateTime = time();
 		$db -> query("UPDATE event SET lasttime = '$updateTime' WHERE id = '$id'");
 	}
-}
+}?>
