@@ -46,24 +46,20 @@ def read_temp_raw(sensorAddress):
 		lines = f.readlines()
 		f.close()
 		return lines
-	return '  '
+	return False
 
 def read_temp(sensorAddress):
     lines = read_temp_raw(sensorAddress)
-    for x in range(0, 5):
-    	if lines[0].strip()[-3:] != 'YES':
-        	time.sleep(0.2)
-        	lines = read_temp_raw(sensorAddress)
-        else:
-        	break
-        	
-    equals_pos = lines[1].find('t=')        	
-    if lines[0].strip()[-3:] != 'YES':
-    	return False
-    elif lines[1][equals_pos+1:equals_pos+3] =='85':
-    	return False
 
-    return lines[1][equals_pos+2:-2]
+    if lines = False or lines[0].strip()[-3:] != 'YES':
+    	return False
+    
+        
+    equals_pos = lines[1].find('t=')
+    if lines[1][equals_pos+1:equals_pos+3] =='85':
+    	return False
+	else:
+	    return lines[1][equals_pos+2:-2]
         
 def updateLCD(values, devices):
 	if max(values) > 800:
@@ -84,17 +80,19 @@ def updateLCD(values, devices):
 
 settings = get_settings()
 lastDataPush = time.time()
-pushFreq = 10 # Data push to database in seconds
+pushFreq = 60 * 5 # Data push to database in seconds
 
 while True:
 	devices = get_device_address()
 	data = ""
 	
 	values = list()
+	dev = list()
 	
 	for address in devices:
 		val = read_temp(address[:-1])
 		if val != False:
+			dev.append(address)
 			values.append(int(val))
 			data += address[:-1] + ":" + val + ","
 		else:
@@ -102,13 +100,15 @@ while True:
 			break
 	
 	if values:
-		updateLCD(values, devices)
+		updateLCD(values, dev)
 		
 		if min(values) < 200 or max(values) > 800:
 			GPIO.output(10, GPIO.HIGH)
 			os.system('sh /home/pi/UNICEF_VACCINE_MONITOR/piezo_alarm.sh &')
+			pushFreq = 60 * 2
 		else:
 			GPIO.output(10, GPIO.LOW)
+			pushFreq = 60 * 5
 		
 	if data and time.time() - lastDataPush > pushFreq:
 		data += ("power-source:" + str(GPIO.input(8)))
@@ -128,3 +128,5 @@ while True:
 			print "No connection to the internet!"
 		
 		lastDataPush = time.time()
+		
+	time.sleep(15)

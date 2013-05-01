@@ -26,13 +26,32 @@ while($row = $input -> fetch_assoc()) {
 	$val = floatval($row['value']);
 	$time = strtotime($row['time']);
 
-	if(time()-$time < 120) { // if reading is less than 2 min old
+	if(time()-$time < 10 * 60) { // if reading is less than 10 min old
 		if($val > $fridgeMax OR $val < $fridgeLow) {
 			$alarms = $alarms."[".$name."] ".$row['value'].", ";
 		}
-		
 	}
 }
+
+
+// Check Power source
+$input = $db->query("SELECT * FROM feeds WHERE tag = 'power-source'");
+
+$alarms = "";
+
+while($row = $input -> fetch_assoc()) {
+	if($row['value'] == '0') {
+		$time = strtotime($row['time']);
+		
+	if(time()-$time < 10 * 60) { // if reading is less than 10 min old
+		if(strlen($alarms) > 0) {
+			$alarms = $alarms." - ";
+		}
+		
+		$alarms = $alarms."The power-grid seems to be down!";
+	}
+}
+
 
 if(strlen($alarms) > 0) {
 	$mutetime = time() - 5 * 60;
@@ -48,4 +67,3 @@ if(strlen($alarms) > 0) {
 		$db -> query("UPDATE event SET lasttime = '$updateTime' WHERE id = '$id'");
 	}
 }
-?>
