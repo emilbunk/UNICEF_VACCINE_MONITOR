@@ -47,14 +47,16 @@ if(!empty($Messages)){
 			break;
 
 			case "reb": // Reboot
-				sendMessage($sender, "System will reboot now");
+				sendMessage($sender, "System will now reboot");
 				deleteMessage($index);
 				exec('sudo reboot');
 			break;
 			
 			case "git": // git pull repository
-				sendMessage($sender, "Pulling newest repository from repository");
 				exec('cd /home/pi/UNICEF_VACCINE_MONITOR && git pull && cd -');
+				sendMessage($sender, "Newest repository has been been pulled, system will now reboot");
+				deleteMessage($index);
+				exec('sudo reboot');
 			break;
 			
 			case "sen": // Sensor
