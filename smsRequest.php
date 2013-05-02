@@ -50,7 +50,7 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						$domain = code[2];
+						$domain = $code[2];
 						$db->query("UPDATE raspberrypi SET remotedmain = '$domain'");
 						sendMessage($sender, "The remote domain has been changed to: ".$domain);
 					break;
@@ -82,7 +82,7 @@ if(!empty($Messages)){
 			break;
 			
 			case "sensor":
-				$sensor = code[2];
+				$sensor = $code[2];
 				echo $sensor;
 				
 				$result = $db->query("SELECT * FROM feeds WHERE name = '$sensor'");
@@ -90,7 +90,7 @@ if(!empty($Messages)){
 					sendMessage($sender, "could not find sensor: ".$sensor);
 					break;
 				}
-				switch (code[1]) {
+				switch ($code[1]) {
 					case "get":
 						$row = $result -> fetch_assoc();
 						sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]");
@@ -98,20 +98,20 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						if(code[3] == '1'){
+						if($code[3] == '1'){
 							// fridge
 							$tag = "fridge";
 							
-						} elseif(code[3] == '2') {
+						} elseif($code[3] == '2') {
 							// freezer
 							$tag = "freezer";
 							
-						} elseif(code[3] == '3') {
+						} elseif($code[3] == '3') {
 							// outdoor
 							$tag = "outdoor";
 							
 						} else {
-						sendMessage($sender, "\"".code[3]."\" is not a known tag code");
+						sendMessage($sender, "\"".$code[3]."\" is not a known tag code");
 						break;
 						}
 						$db -> query("UPDATE feeds SET tag = '$tag' WHERE name = '$sensor'");
