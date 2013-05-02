@@ -15,11 +15,23 @@ if($db->connect_errno > 0){
 	die('Unable to connect to database [' . $db->connect_error . ']');
 }
 
+$alarms = "";
+
+// Check Power source
+$input = $db->query("SELECT * FROM feeds WHERE tag = 'power-source'");
+
+while($row = $input -> fetch_assoc()) {
+	if($row['value'] == '0') {
+		$time = strtotime($row['time']);
+		
+		if(time()-$time < 10 * 60) { // if reading is less than 10 min old
+			$alarms = $alarms."The power-grid seems to be down! - ";
+		}
+	}
+}
 
 // Check Fridges
 $input = $db->query("SELECT * FROM feeds WHERE tag = 'fridge'");
-
-$alarms = "";
 
 while($row = $input -> fetch_assoc()) {
 	$name = $row['name'];
@@ -30,24 +42,6 @@ while($row = $input -> fetch_assoc()) {
 		if($val > $fridgeMax OR $val < $fridgeLow) {
 			$alarms = $alarms."[".$name."] ".$row['value'].", ";
 		}
-	}
-}
-
-
-// Check Power source
-$input = $db->query("SELECT * FROM feeds WHERE tag = 'power-source'");
-
-while($row = $input -> fetch_assoc()) {
-	if($row['value'] == '0') {
-		$time = strtotime($row['time']);
-		
-		if(time()-$time < 10 * 60) { // if reading is less than 10 min old
-			if(strlen($alarms) > 0) {
-				$alarms = substr($alarms, 0, -2)." - ";
-			}
-		}
-		
-		$alarms = $alarms."The power-grid seems to be down!, ";
 	}
 }
 
