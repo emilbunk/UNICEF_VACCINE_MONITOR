@@ -15,11 +15,12 @@ if(!empty($Messages)){
 	foreach ($Messages->Message as $mes) {
 		$content = $mes -> Content;
 		echo $content."\n";
+		$code = explode(" ", $content);
 		$sender = $mes -> Phone;
 		$index = $mes -> Index;
-		switch (strtolower(substr($content, 0, 3))) {
+		switch ($code[0]) {
 			case "api":
-				switch (strtolower(substr($content, 4, 3))) {
+				switch ($code[1]) {
 					case "get":
 						$result = $db->query("SELECT * FROM raspberrypi");
 						$row = $result->fetch_array(MYSQLI_ASSOC);
@@ -28,14 +29,34 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						$newkey = strtolower(substr($content, 8, 32));
-						$db->query("UPDATE raspberrypi SET remoteapikey = '$newkey'");
-						sendMessage($sender, "The remote API-key has been change to: ".$newkey);
+						$apikey = $code[2];
+						if(strlen($apikey == 32){
+							$db->query("UPDATE raspberrypi SET remoteapikey = '$apikey'");
+							sendMessage($sender, "The remote API-key has been changed to: ".$newkey);
+						} else {
+							sendMessage($sender, "Error, the API-key should be 32 characters long");
+					break;
+				}
+			break;
+			
+			case "domain":
+				switch ($code[1]) {
+					case "get":
+						$result = $db->query("SELECT * FROM raspberrypi");
+						$row = $result->fetch_array(MYSQLI_ASSOC);
+						echo $row['remotedomain']."\n";
+						sendMessage($sender, "Current remote domain: ".$row['remotedomain']);
+					break;
+					
+					case "set":
+						$domain = code[2];
+						$db->query("UPDATE raspberrypi SET remotedmain = '$domain'");
+						sendMessage($sender, "The remote domain has been changed to: ".$domain);
 					break;
 				}
 			break;
 
-			case "ala": // Alarm
+			case "alarm": // Alarm
 				$check = $db->query("SELECT * FROM event WHERE setphonenumber = '$sender'");
 				if($check->num_rows > 0) {
 					$db->query("DELETE FROM event WHERE setphonenumber = '$sender'");
@@ -46,7 +67,7 @@ if(!empty($Messages)){
 				}
 			break;
 
-			case "reb": // Reboot
+			case "reboot":
 				sendMessage($sender, "System will now reboot");
 				deleteMessage($index);
 				exec('sudo reboot');
@@ -59,8 +80,8 @@ if(!empty($Messages)){
 				exec('sudo reboot');
 			break;
 			
-			case "sen": // Sensor
-				$sensor = strtolower(substr($content, 11, 15));
+			case "sensor":
+				$sensor = code[2];
 				echo $sensor;
 				
 				$result = $db->query("SELECT * FROM feeds WHERE name = '$sensor'");
@@ -68,7 +89,7 @@ if(!empty($Messages)){
 					sendMessage($sender, "could not find sensor: ".$sensor);
 					break;
 				}
-				switch (strtolower(substr($content, 7, 3))) {
+				switch (code[1]) {
 					case "get":
 						$row = $result -> fetch_assoc();
 						sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]");
@@ -76,20 +97,20 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						if(substr($content, 27, 1) == '1'){
+						if(code[3] == '1'){
 							// fridge
 							$tag = "fridge";
 							
-						} elseif(substr($content, 27, 1) == '2') {
+						} elseif(code[3] == '2') {
 							// freezer
 							$tag = "freezer";
 							
-						} elseif(substr($content, 27, 1) == '3') {
+						} elseif(code[3] == '3') {
 							// outdoor
 							$tag = "outdoor";
 							
 						} else {
-						sendMessage($sender, "not a known tag code");
+						sendMessage($sender, "\"".code[3]."\" is not a known tag code");
 						break;
 						}
 						$db -> query("UPDATE feeds SET tag = '$tag' WHERE name = '$sensor'");

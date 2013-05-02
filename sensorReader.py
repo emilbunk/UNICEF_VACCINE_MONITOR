@@ -108,6 +108,7 @@ while True:
 			pushFreq = 60 * 5
 			
 	else:
+		GPIO.output(10, GPIO.LOW)
 		lcd.clear()
 		lcd.message("Awaiting\nmeasurments")
 		
