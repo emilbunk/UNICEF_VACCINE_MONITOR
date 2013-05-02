@@ -35,6 +35,7 @@ if(!empty($Messages)){
 							sendMessage($sender, "The remote API-key has been changed to: ".$newkey);
 						} else {
 							sendMessage($sender, "Error, the API-key should be 32 characters long");
+						]
 					break;
 				}
 			break;
