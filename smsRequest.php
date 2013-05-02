@@ -16,6 +16,7 @@ if(!empty($Messages)){
 		$content = $mes -> Content;
 		echo $content."\n";
 		$code = explode(" ", $content);
+		echo $code[0];
 		$sender = $mes -> Phone;
 		$index = $mes -> Index;
 		switch ($code[0]) {
