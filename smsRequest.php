@@ -15,7 +15,7 @@ if(!empty($Messages)){
 	foreach ($Messages->Message as $mes) {
 		$content = $mes -> Content;
 		echo $content."\n";
-		$code = explode(" ", $content);
+		$code = explode(" ", strtolower($content));
 		echo $code[0];
 		$sender = $mes -> Phone;
 		$index = $mes -> Index;
