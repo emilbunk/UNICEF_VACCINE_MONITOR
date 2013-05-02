@@ -52,12 +52,46 @@ if(!empty($Messages)){
 					
 					case "set":
 						$domain = $code[2];
-						$db->query("UPDATE raspberrypi SET remotedmain = '$domain'");
+						$db->query("UPDATE raspberrypi SET remotedomain = '$domain'");
 						sendMessage($sender, "The remote domain has been changed to: ".$domain);
 					break;
 				}
 			break;
 
+			case "path":
+				switch ($code[1]) {
+					case "get":
+						$result = $db->query("SELECT * FROM raspberrypi");
+						$row = $result->fetch_array(MYSQLI_ASSOC);
+						echo $row['remotepath']."\n";
+						sendMessage($sender, "Current remote path: ".$row['remotepath']);
+					break;
+					
+					case "set":
+						$path = $code[2];
+						$db->query("UPDATE raspberrypi SET remotepath = '$path'");
+						sendMessage($sender, "The remote path has been changed to: ".$path);
+					break;
+				}
+			break;
+			
+			case "protocol":
+				switch ($code[1]) {
+					case "get":
+						$result = $db->query("SELECT * FROM raspberrypi");
+						$row = $result->fetch_array(MYSQLI_ASSOC);
+						echo $row['remoteprotocol']."\n";
+						sendMessage($sender, "Current remote protocol: ".$row['remoteprotocol']);
+					break;
+					
+					case "set":
+						$protocol = $code[2];
+						$db->query("UPDATE raspberrypi SET remoteprotocol = '$protocol'");
+						sendMessage($sender, "The remote domain has been changed to: ".$protocol);
+					break;
+				}
+			break;
+			
 			case "alarm": // Alarm
 				$check = $db->query("SELECT * FROM event WHERE setphonenumber = '$sender'");
 				if($check->num_rows > 0) {
