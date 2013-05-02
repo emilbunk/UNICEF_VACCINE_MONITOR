@@ -6,7 +6,6 @@ $fridgeMax = 7;
 $fridgeLow = 3;
 $freezerMax = -15;
 $freezerLow = -25;
-$maxTimeWithoutPower = 10 * 60; // 10 minutes
 
 
 $db = new mysqli('localhost', 'root', 'raspberry', 'emoncms');
@@ -47,7 +46,7 @@ while($row = $input -> fetch_assoc()) {
 
 
 if(strlen($alarms) > 0) {
-	$mutetime = time() - 5 * 60;
+	$mutetime = time() - 30 * 60;
 	$users = $db -> query("SELECT * FROM event WHERE lasttime < '$mutetime'");
 	
 	while($row = $users -> fetch_assoc()) {
