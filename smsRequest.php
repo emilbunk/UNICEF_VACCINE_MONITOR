@@ -30,12 +30,12 @@ if(!empty($Messages)){
 					
 					case "set":
 						$apikey = $code[2];
-						if(strlen($apikey == 32){
+						if(strlen($apikey) == 32){
 							$db->query("UPDATE raspberrypi SET remoteapikey = '$apikey'");
 							sendMessage($sender, "The remote API-key has been changed to: ".$newkey);
 						} else {
 							sendMessage($sender, "Error, the API-key should be 32 characters long");
-						]
+						}
 					break;
 				}
 			break;
