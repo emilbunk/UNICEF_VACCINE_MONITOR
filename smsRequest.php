@@ -33,7 +33,7 @@ if(!empty($Messages)){
 						$apikey = $code[2];
 						if(strlen($apikey) == 32){
 							$db->query("UPDATE raspberrypi SET remoteapikey = '$apikey'");
-							sendMessage($sender, "The remote API-key has been changed to: ".$newkey);
+							sendMessage($sender, "The remote API-key has been changed to: ".$apikey);
 						} else {
 							sendMessage($sender, "Error, the API-key should be 32 characters long");
 						}
@@ -110,7 +110,7 @@ if(!empty($Messages)){
 			break;
 			
 			case "git": // git pull repository
-				exec('cd /home/pi/UNICEF_VACCINE_MONITOR && git pull && cd -');
+				exec('cd /home/pi/UNICEF_VACCINE_MONITOR && sudo git pull && cd -');
 				sendMessage($sender, "Newest repository has been been pulled, system will now reboot");
 				deleteMessage($index);
 				exec('sudo reboot');

@@ -71,8 +71,8 @@ def updateLCD(values, devices):
 		index = values.index(min(values))
 		mes = devices[index] + temp
 	else:
-		mes = "Cur. max:%+2.2f\n" %(float(max(values))/100)
-		temp = "Cur. min:%+2.2f" %(float(min(values))/100)
+		mes = "Cur. Max:%+2.2f\n" %(float(max(values))/100)
+		temp = "Cur. Min:%+2.2f" %(float(min(values))/100)
 		mes += temp
 		
 	lcd.clear()
