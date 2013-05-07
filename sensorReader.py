@@ -56,7 +56,7 @@ def read_temp(sensorAddress):
     
         
     equals_pos = lines[1].find('t=')
-    if lines[1][equals_pos+1:equals_pos+3] == '85':
+    if lines[1][equals_pos+2:equals_pos+3] == '85':
     	return False
     	
     return lines[1][equals_pos+2:-2]

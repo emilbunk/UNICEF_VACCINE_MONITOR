@@ -2,8 +2,8 @@
 include '/home/pi/UNICEF_VACCINE_MONITOR/E3131_smsGateway.php';
 
 // Global variables
-$fridgeMax = 7;
-$fridgeLow = 3;
+$fridgeMax = 7.5;
+$fridgeLow = 2.5;
 $freezerMax = -15;
 $freezerLow = -25;
 
