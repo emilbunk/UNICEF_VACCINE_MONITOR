@@ -12,13 +12,13 @@ os.system('sudo modprobe w1-gpio')
 os.system('sudo modprobe w1-therm')
 time.sleep(10) # wait to give the 1-wire software time to find the connected sensors
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 # Set led pin as out, and turn it of.
-GPIO.setup(12, GPIO.OUT)
-GPIO.setup(12, GPIO.LOW)
+GPIO.setup(8, GPIO.OUT)
+GPIO.setup(8, GPIO.LOW)
 
 # Set optocoupler pin as in, where high readings means that a external power source is available.
-GPIO.setup(10, GPIO.IN)
+GPIO.setup(12, GPIO.IN)
 
 base_dir = '/sys/bus/w1/devices'
 
@@ -81,7 +81,7 @@ def updateLCD(values, devices):
 def powerRead():
 	power = 0
 	for i in range(5):
-		power += GPIO.input(10)
+		power += GPIO.input(8)
 		time.sleep(1)
 	if power > 0:
 		return 1
@@ -117,7 +117,7 @@ while True:
 			pushFreq = 60 * 5
 			
 	else:
-		GPIO.output(12, GPIO.LOW)
+		GPIO.output(10, GPIO.LOW)
 		lcd.clear()
 		lcd.message("Awaiting\nmeasurments")
 		
