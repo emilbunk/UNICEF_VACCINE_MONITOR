@@ -56,7 +56,7 @@ def read_temp(sensorAddress):
     
         
     equals_pos = lines[1].find('t=')
-    if lines[1][equals_pos+2:equals_pos+3] == '85':
+    if lines[1][equals_pos+2:-2] == '8500':
     	return False
     	
     return lines[1][equals_pos+2:-2]
@@ -78,11 +78,21 @@ def updateLCD(values, devices):
 	lcd.clear()
 	lcd.message(mes)
 
+def powerRead():
+	power = 0
+	for i in range(5):
+		power += GPIO.input(8)
+		time.sleep(1)
+	if power > 0:
+		return 1
+	return 0
+
 settings = get_settings()
 lastDataPush = time.time()
 pushFreq = 60 * 5 # Data push to database in seconds
 
 while True:
+	GPIO.setmode(GPIO.BCM)
 	devices = get_device_address()
 	data = ""
 	
@@ -113,8 +123,9 @@ while True:
 		lcd.message("Awaiting\nmeasurments")
 		
 	if time.time() - lastDataPush > pushFreq:
-		data += ("power-source:" + str(GPIO.input(8)))
-		
+		power = powerRead()
+		data += ("power-source:" + str(power))
+
 		url1 = "http://localhost/emoncms/input/post.json?json={" + data + "}&apikey=" + settings['apikey']
 		
 		url2 = settings['remoteprotocol'] + settings['remotedomain'] + settings['remotepath'] + "/input/post.json?json={" + data + "}&apikey=" + settings['remoteapikey']
