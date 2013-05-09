@@ -92,7 +92,6 @@ lastDataPush = time.time()
 pushFreq = 60 * 5 # Data push to database in seconds
 
 while True:
-	GPIO.setmode(GPIO.BCM)
 	devices = get_device_address()
 	data = ""
 	
