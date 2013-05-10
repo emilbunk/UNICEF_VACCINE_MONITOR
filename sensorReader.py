@@ -14,8 +14,8 @@ time.sleep(10) # wait to give the 1-wire software time to find the connected sen
 
 GPIO.setmode(GPIO.BCM)
 # Set led pin as out, and turn it of.
-#GPIO.setup(10, GPIO.OUT)
-#GPIO.setup(10, GPIO.LOW)
+GPIO.setup(10, GPIO.OUT)
+GPIO.setup(10, GPIO.LOW)
 
 # Set optocoupler pin as in, where high readings means that a external power source is available.
 GPIO.setup(8, GPIO.IN)
@@ -109,11 +109,11 @@ while True:
 		updateLCD(values, dev)
 		
 		if min(values) < 200 or max(values) > 800:
-			#GPIO.output(10, GPIO.HIGH)
+			GPIO.output(10, GPIO.HIGH)
 			os.system('sh /home/pi/UNICEF_VACCINE_MONITOR/piezo_alarm.sh &')
 			pushFreq = 60 * 2
 		else:
-			#GPIO.output(10, GPIO.LOW)
+			GPIO.output(10, GPIO.LOW)
 			pushFreq = 60 * 5
 			
 	else:
@@ -131,12 +131,12 @@ while True:
 		
 		try:
 			urllib2.urlopen(url1)
-		except urllib2.URLError:
+		except:
 			print "Cannot connect to localhost!"
 			
 		try:
 			urllib2.urlopen(url2)
-		except urllib2.URLError:
+		except:
 			print "No connection to the internet!"
 		
 		lastDataPush = time.time()
