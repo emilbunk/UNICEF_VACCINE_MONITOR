@@ -1,5 +1,5 @@
 <?php
-include '/home/pi/UNICEF_VACCINE_MONITOR/E3131_smsGateway.php';
+include '/home/pi/UNICEF_VACCINE_MONITOR/hilink_smsGateway.php';
 
 // Global variables
 $fridgeMax = 7.5;

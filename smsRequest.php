@@ -1,5 +1,5 @@
 <?php
-include '/home/pi/UNICEF_VACCINE_MONITOR/E3131_smsGateway.php';
+include '/home/pi/UNICEF_VACCINE_MONITOR/hilink_smsGateway.php';
 
 // Retrive inbox
 $Messages = getList(1);
@@ -133,22 +133,32 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						if($code[3] == '1'){
-							// fridge
-							$tag = "fridge";
+						switch ($code[3]) {
+							case "0":
+								// Disabled sensor, ignored in the alarm module
+								$tag = "none";
+								break;
+							case "1":
+								// fridge
+								$tag = "fridge";
+								break;
 							
-						} elseif($code[3] == '2') {
-							// freezer
-							$tag = "freezer";
+							case "2":
+								// freezer
+								$tag = "freezer";
+								break;
 							
-						} elseif($code[3] == '3') {
-							// outdoor
-							$tag = "outdoor";
+							case "3":
+								// outdoor
+								$tag = "outdoor";
+								break;
 							
-						} else {
-						sendMessage($sender, "\"".$code[3]."\" is not a known tag code");
-						break;
+							case "4":
+								// power-source
+								$tag = "power-source";
+								break;
 						}
+						
 						$db -> query("UPDATE feeds SET tag = '$tag' WHERE name = '$sensor'");
 						sendMessage($sender, "Sensor: ".$sensor.", has changed tag to: ".$tag);
 					break;
