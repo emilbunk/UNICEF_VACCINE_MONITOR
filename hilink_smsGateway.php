@@ -19,12 +19,12 @@
 		return $xml;
 	}
 
-	function getList($boxNo) {
+	function getList($boxNo, $pageNo = 1) {
 		// 1 for inbox, 2 for outbox
 		$URL = "http://192.168.1.1/api/sms/sms-list";
 		
 		$xml_data =	"<request>".
-    				"<PageIndex>1</PageIndex>".
+    				"<PageIndex>".$pageNo."</PageIndex>".
         			"<ReadCount>20</ReadCount>".
         			"<BoxType>".$boxNo."</BoxType>".
 					"<SortType>0</SortType>".
