@@ -19,9 +19,12 @@
 		return $xml;
 	}
 
-	function getList($boxNo, $pageNo = 1) {
+	function getList($boxNo) {
 		// 1 for inbox, 2 for outbox
 		$URL = "http://192.168.1.1/api/sms/sms-list";
+		$notEmpty = true ; 
+		$resultMsgs =  array();
+		$pageNo = 1 ;
 		
 		$xml_data =	"<request>".
     				"<PageIndex>".$pageNo."</PageIndex>".
@@ -32,11 +35,23 @@
 					"<UnreadPreferred>0</UnreadPreferred>".
 					"</request>";
 
-		$xml = sendRequest($URL, $xml_data);
-		$Messages = $xml -> Messages;
+		
+		while($notEmpty)
+		{
+			$Messages = sendRequest($URL, $xml_data)-> Messages;
 
-		return $Messages;
+			if(empty($Messages))
+			{
+			  $notEmpty=false;
+			}else{
+			  $resultMsgs=array_merge((array)$resultMsgs,(array)$Messages);
+			  $pageNo++;
+			}	
+		}
+		
+		return $resultsMsg;
 	}
+
 
 	function deleteMessage($index) {
 		$URL = "http://192.168.1.1/api/sms/delete-sms";
