@@ -26,18 +26,16 @@
 		$resultMsgs =  array();
 		$pageNo = 1 ;
 		
-		$xml_data =	"<request>".
-    				"<PageIndex>".$pageNo."</PageIndex>".
-        			"<ReadCount>20</ReadCount>".
-        			"<BoxType>".$boxNo."</BoxType>".
-					"<SortType>0</SortType>".
-        			"<Ascending>0</Ascending>".
-					"<UnreadPreferred>0</UnreadPreferred>".
-					"</request>";
-
-		
 		while($notEmpty)
 		{
+			$xml_data =	"<request>".
+    					"<PageIndex>".$pageNo."</PageIndex>".
+        				"<ReadCount>20</ReadCount>".
+        				"<BoxType>".$boxNo."</BoxType>".
+					"<SortType>0</SortType>".
+        				"<Ascending>0</Ascending>".
+					"<UnreadPreferred>0</UnreadPreferred>".
+					"</request>";
 			$Messages = sendRequest($URL, $xml_data)-> Messages;
 
 			if(empty($Messages))
