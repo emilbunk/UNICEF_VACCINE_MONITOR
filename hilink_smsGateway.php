@@ -19,38 +19,18 @@
 		return $xml;
 	}
 
-	function getList($boxNo) {
+	function getList($boxNo, $pageNo = 1) {
 		// 1 for inbox, 2 for outbox
 		$URL = "http://192.168.1.1/api/sms/sms-list";
-		$notEmpty = true ; 
-		$string = "<Messages></Messages>";
-		$resultMsgs =  simplexml_load_string($string);
-		$pageNo = 1 ;
-		
-		while($notEmpty)
-		{
-			$xml_data =	"<request>".
-    					"<PageIndex>".$pageNo."</PageIndex>".
-        				"<ReadCount>20</ReadCount>".
-        				"<BoxType>".$boxNo."</BoxType>".
-						"<SortType>0</SortType>".
-        				"<Ascending>0</Ascending>".
-						"<UnreadPreferred>0</UnreadPreferred>".
-						"</request>";
-			$Messages = sendRequest($URL, $xml_data)-> Messages;
-
-			if(empty($Messages))
-			{
-			  $notEmpty=false;
-			}else{
-			  foreach( $Messages->Message as $mes) {
-			  	$resultMsgs->addChild("Message", $mes);
-			  }
-			  $pageNo++;
-			}	
-		}
-		
-		return $resultsMsg;
+		$xml_data =	"<request>".
+    				"<PageIndex>".$pageNo."</PageIndex>".
+        			"<ReadCount>20</ReadCount>".
+        			"<BoxType>".$boxNo."</BoxType>".
+					"<SortType>0</SortType>".
+        			"<Ascending>0</Ascending>".
+					"<UnreadPreferred>0</UnreadPreferred>".
+					"</request>";
+		$Messages = sendRequest($URL, $xml_data)-> Messages;
 	}
 
 
