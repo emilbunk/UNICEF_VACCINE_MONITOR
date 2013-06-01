@@ -44,7 +44,7 @@
 			  $notEmpty=false;
 			}else{
 			  foreach( $Messages->Message as $mes) {
-			  	$resultMsgs->Messages->addChild("Message", $mes);
+			  	$resultMsgs->addChild("Message", $mes);
 			  }
 			  $pageNo++;
 			}	
