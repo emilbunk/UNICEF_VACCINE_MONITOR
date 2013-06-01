@@ -30,7 +30,7 @@
         			"<Ascending>0</Ascending>".
 					"<UnreadPreferred>0</UnreadPreferred>".
 					"</request>";
-		$Messages = sendRequest($URL, $xml_data)-> Messages;
+		return sendRequest($URL, $xml_data)-> Messages;
 	}
 
 
