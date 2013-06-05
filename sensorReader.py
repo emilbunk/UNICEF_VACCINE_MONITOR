@@ -80,9 +80,8 @@ def updateLCD(values, devices):
 
 def powerRead():
 	power = 0
-	for i in range(5):
+	for i in range(20):
 		power += GPIO.input(8)
-		time.sleep(1)
 	if power > 0:
 		return 1
 	return 0
