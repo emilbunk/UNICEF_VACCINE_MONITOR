@@ -15,13 +15,13 @@ if(!empty($Messages)){
 	foreach ($Messages->Message as $mes) {
 		$content = $mes -> Content;
 		echo $content."\n";
-		$code = explode(" ", strtolower($content));
-		echo $code[0];
+		$keyword = explode(" ", strtolower($content));
+		echo $keyword[0];
 		$sender = $mes -> Phone;
 		$index = $mes -> Index;
-		switch ($code[0]) {
+		switch ($keyword[0]) {
 			case "api":
-				switch ($code[1]) {
+				switch ($keyword[1]) {
 					case "get":
 						$result = $db->query("SELECT * FROM raspberrypi");
 						$row = $result->fetch_array(MYSQLI_ASSOC);
@@ -30,7 +30,7 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						$apikey = $code[2];
+						$apikey = $keyword[2];
 						if(strlen($apikey) == 32){
 							$db->query("UPDATE raspberrypi SET remoteapikey = '$apikey'");
 							sendMessage($sender, "The remote API-key has been changed to: ".$apikey);
@@ -42,7 +42,7 @@ if(!empty($Messages)){
 			break;
 			
 			case "domain":
-				switch ($code[1]) {
+				switch ($keyword[1]) {
 					case "get":
 						$result = $db->query("SELECT * FROM raspberrypi");
 						$row = $result->fetch_array(MYSQLI_ASSOC);
@@ -51,7 +51,7 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						$domain = $code[2];
+						$domain = $keyword[2];
 						$db->query("UPDATE raspberrypi SET remotedomain = '$domain'");
 						sendMessage($sender, "The remote domain has been changed to: ".$domain);
 					break;
@@ -59,7 +59,7 @@ if(!empty($Messages)){
 			break;
 
 			case "path":
-				switch ($code[1]) {
+				switch ($keyword[1]) {
 					case "get":
 						$result = $db->query("SELECT * FROM raspberrypi");
 						$row = $result->fetch_array(MYSQLI_ASSOC);
@@ -68,7 +68,7 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						$path = $code[2];
+						$path = $keyword[2];
 						$db->query("UPDATE raspberrypi SET remotepath = '$path'");
 						sendMessage($sender, "The remote path has been changed to: ".$path);
 					break;
@@ -76,7 +76,7 @@ if(!empty($Messages)){
 			break;
 			
 			case "protocol":
-				switch ($code[1]) {
+				switch ($keyword[1]) {
 					case "get":
 						$result = $db->query("SELECT * FROM raspberrypi");
 						$row = $result->fetch_array(MYSQLI_ASSOC);
@@ -85,7 +85,7 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						$protocol = $code[2];
+						$protocol = $keyword[2];
 						$db->query("UPDATE raspberrypi SET remoteprotocol = '$protocol'");
 						sendMessage($sender, "The remote domain has been changed to: ".$protocol);
 					break;
@@ -117,7 +117,7 @@ if(!empty($Messages)){
 			break;
 			
 			case "sensor":
-				$sensor = $code[2];
+				$sensor = $keyword[2];
 				echo $sensor;
 				
 				$result = $db->query("SELECT * FROM feeds WHERE name = '$sensor'");
@@ -125,7 +125,7 @@ if(!empty($Messages)){
 					sendMessage($sender, "could not find sensor: ".$sensor);
 					break;
 				}
-				switch ($code[1]) {
+				switch ($keyword[1]) {
 					case "get":
 						$row = $result -> fetch_assoc();
 						sendMessage($sender, "Sensor: ".$sensor.", [".$row['tag'].", ".$row['value']."]");
@@ -133,7 +133,7 @@ if(!empty($Messages)){
 					break;
 					
 					case "set":
-						switch ($code[3]) {
+						switch ($keyword[3]) {
 							case "0":
 								// Disabled sensor, ignored in the alarm module
 								$tag = "none";
@@ -166,7 +166,7 @@ if(!empty($Messages)){
 			break;
 			
 			default:
-				sendMessage($sender, "\"".$content."\" does not match any known request, try again.");
+				sendMessage($sender, "\"".$content."\" does not match any known keywords, try again.");
 		}
 		deleteMessage($index);
 	}
